@@ -312,7 +312,7 @@ kbd{font-family:var(--mono);background:var(--surface-2);border:1px solid var(--l
 @media (max-width:860px){
   :root{--tb-h:50px}
   .sidebar{position:fixed;left:0;right:0;bottom:0;width:auto;max-height:76vh;height:auto;
-    border-left:none;border-top:1px solid var(--line);border-radius:16px 16px 0 0;
+    border-left:none;border-top:1px solid var(--line);border-radius:16px 16px 0 0;z-index:46;
     transform:translateY(102%);transition:transform .24s ease;box-shadow:0 -10px 30px rgba(0,0,0,.5)}
   .sidebar.open{transform:translateY(0)}
   .sidebar::before{content:"";position:absolute;top:7px;left:50%;transform:translateX(-50%);
@@ -328,7 +328,7 @@ kbd{font-family:var(--mono);background:var(--surface-2);border:1px solid var(--l
   .mtab svg{width:19px;height:19px}
   .mtab.on{color:var(--accent)}
   .sidebar.open ~ .mobile-bar{opacity:.4}
-  #sheetScrim.show{display:block;position:fixed;inset:0;z-index:31;background:rgba(3,6,12,.5)}
+  #sheetScrim.show{display:block;position:fixed;inset:0;z-index:45;background:rgba(3,6,12,.5)}
   .stage{padding-bottom:56px}
   #liveBar{bottom:72px}
   .tb-hide-mobile{display:none!important}
