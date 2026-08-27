@@ -311,7 +311,7 @@ kbd{font-family:var(--mono);background:var(--surface-2);border:1px solid var(--l
 @media (max-width:1040px){:root{--side-w:290px}}
 @media (max-width:860px){
   :root{--tb-h:50px}
-  .sidebar{position:fixed;left:0;right:0;bottom:0;width:auto;max-height:76vh;height:auto;
+  .sidebar{position:fixed;left:0;right:0;bottom:0;width:auto;max-height:76dvh;height:auto;
     border-left:none;border-top:1px solid var(--line);border-radius:16px 16px 0 0;z-index:46;
     transform:translateY(102%);transition:transform .24s ease;box-shadow:0 -10px 30px rgba(0,0,0,.5)}
   .sidebar.open{transform:translateY(0)}
@@ -329,10 +329,15 @@ kbd{font-family:var(--mono);background:var(--surface-2);border:1px solid var(--l
   .mtab.on{color:var(--accent)}
   .sidebar.open ~ .mobile-bar{opacity:.4}
   #sheetScrim.show{display:block;position:fixed;inset:0;z-index:45;background:rgba(3,6,12,.5)}
-  .stage{padding-bottom:56px}
-  #liveBar{bottom:72px}
+  .stage{padding-bottom:calc(56px + env(safe-area-inset-bottom))}
+  #liveBar{bottom:calc(72px + env(safe-area-inset-bottom))}
+  .side-scroll{padding-bottom:calc(60px + env(safe-area-inset-bottom))}
   .tb-hide-mobile{display:none!important}
   .brand span{display:none}
+  .brand b{display:none}
+  .brand{padding-right:2px;margin-right:0}
+  .toolbar{gap:4px;padding:0 8px}
+  .toolbar .btn{padding:0 8px}
 }
 body.focusmode #liveBar{bottom:20px}
 @media (max-width:520px){
@@ -368,8 +373,8 @@ body.focusmode .toolbar{background:rgba(10,18,32,.4);border-bottom-color:transpa
       <button class="btn" id="btnCamera" title="Live camera viewfinder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 8.5A1.5 1.5 0 0 1 4.5 7h2l1.2-1.8A1 1 0 0 1 8.5 4.7h7a1 1 0 0 1 .8.5L17.5 7h2A1.5 1.5 0 0 1 21 8.5v9A1.5 1.5 0 0 1 19.5 19h-15A1.5 1.5 0 0 1 3 17.5z"/><circle cx="12" cy="13" r="3.4"/></svg>Live</button>
       <button class="btn tb-collapse" id="btnSample" title="Load a built-in sample frame"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 15l5-4 4 3 3-2 6 5"/><circle cx="8.5" cy="9" r="1.6"/></svg>Sample</button>
     </div>
-    <div class="tb-sep tb-focus-hide"></div>
-    <div class="tb-group tb-focus-hide">
+    <div class="tb-sep tb-focus-hide tb-hide-mobile"></div>
+    <div class="tb-group tb-focus-hide tb-hide-mobile">
       <button class="btn icon" id="btnUndo" title="Undo (Ctrl+Z)" disabled aria-label="Undo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 7L4 12l5 5M4 12h11a5 5 0 0 1 0 10h-1"/></svg></button>
       <button class="btn icon" id="btnRedo" title="Redo (Ctrl+Shift+Z)" disabled aria-label="Redo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M15 7l5 5-5 5M20 12H9a5 5 0 0 0 0 10h1"/></svg></button>
     </div>
@@ -383,10 +388,10 @@ body.focusmode .toolbar{background:rgba(10,18,32,.4);border-bottom-color:transpa
     </div>
     <div class="tb-sep tb-hide-mobile"></div>
     <div class="tb-group">
-      <button class="btn icon tb-focus-hide" id="btnCompare" title="Split compare view" aria-label="Compare"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M12 4v16"/></svg></button>
-      <button class="btn icon tb-focus-hide" id="btnFocus" title="Focus / distraction-free mode (Esc to exit)" aria-label="Focus mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 8V5a1 1 0 0 1 1-1h3M20 8V5a1 1 0 0 0-1-1h-3M4 16v3a1 1 0 0 0 1 1h3M20 16v3a1 1 0 0 1-1 1h-3"/></svg></button>
+      <button class="btn icon tb-focus-hide tb-hide-mobile" id="btnCompare" title="Split compare view" aria-label="Compare"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M12 4v16"/></svg></button>
+      <button class="btn icon tb-focus-hide tb-hide-mobile" id="btnFocus" title="Focus / distraction-free mode (Esc to exit)" aria-label="Focus mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 8V5a1 1 0 0 1 1-1h3M20 8V5a1 1 0 0 0-1-1h-3M4 16v3a1 1 0 0 0 1 1h3M20 16v3a1 1 0 0 1-1 1h-3"/></svg></button>
       <button class="btn icon" id="btnFull" title="Fullscreen (F)" aria-label="Fullscreen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
-      <button class="btn icon tb-focus-hide" id="btnReset" title="Reset workspace" aria-label="Reset"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4v6h6M20 20v-6h-6"/><path d="M20 10a8 8 0 0 0-14-4M4 14a8 8 0 0 0 14 4"/></svg></button>
+      <button class="btn icon tb-focus-hide tb-hide-mobile" id="btnReset" title="Reset workspace" aria-label="Reset"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4v6h6M20 20v-6h-6"/><path d="M20 10a8 8 0 0 0-14-4M4 14a8 8 0 0 0 14 4"/></svg></button>
       <button class="btn icon tb-focus-hide" id="btnHelp" title="Help & shortcuts (?)" aria-label="Help"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 0 1 4.5 1.5c0 1.5-2 2-2 3.2"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg></button>
       <button class="btn primary" id="btnExport" title="Export PNG (Ctrl+S)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v11M8 10l4 4 4-4M4 20h16"/></svg>Export</button>
     </div>
@@ -459,6 +464,7 @@ body.focusmode .toolbar{background:rgba(10,18,32,.4);border-bottom-color:transpa
           <option disabled>──────────</option>
         </select>
         <button class="btn icon" id="btnSavePreset" title="Save current setup as preset" aria-label="Save preset"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 3h11l3 3v15H5z"/><path d="M8 3v6h7V3M8 21v-7h8v7"/></svg></button>
+        <button class="btn icon" id="btnResetSheet" title="Reset workspace" aria-label="Reset workspace"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4v6h6M20 20v-6h-6"/><path d="M20 10a8 8 0 0 0-14-4M4 14a8 8 0 0 0 14 4"/></svg></button>
       </div>
       <div class="side-scroll" id="sideScroll"></div>
     </aside>
@@ -1619,7 +1625,7 @@ els.viewport.addEventListener('pointerdown',e=>{
   if(guide){ gesture={type:'guide',which:guide}; return; }
   if(t==='text'){ openTextInput(p); return; }
   if(panMode){ gesture={type:'pan',sx:e.clientX,sy:e.clientY,px:state.view.pan.x,py:state.view.pan.y}; els.stage.classList.add('grabbing'); return; }
-  if(t==='eyedropper'){ const c=screenToCropNorm(p.x,p.y); pinSample(p); return; }
+  if(t==='eyedropper'){ gesture={type:'eyedrop',p}; updateLoupe(p); return; }  // press-drag-lift: preview, pin on release (works on touch)
   if(t==='measure'){ const n=screenToCropNorm(p.x,p.y); gesture={type:'measure',x1:n.x,y1:n.y}; state.measure={x1:n.x,y1:n.y,x2:n.x,y2:n.y}; return; }
   // draw tools
   if(['arrow','rect','circle','freehand'].includes(t)){
@@ -1658,6 +1664,7 @@ els.viewport.addEventListener('pointermove',e=>{
     else state.guides.vguideX=clamp((p.x-c.x)/c.w,0,1);
     requestRender();return;
   }
+  if(gesture.type==='eyedrop'){ gesture.p=p; updateLoupe(p); return; }
   if(gesture.type==='measure'){
     const n=screenToCropNorm(p.x,p.y);state.measure.x2=n.x;state.measure.y2=n.y;
     showMeasureReadout(p);requestRender();return;
@@ -1677,6 +1684,7 @@ els.viewport.addEventListener('pointerup',e=>{
   if(wasPinch)return;
   if(!gesture)return;
   const g=gesture;gesture=null;
+  if(g.type==='eyedrop'){ pinSample(g.p); hideLoupe(); return; }
   if(g.type==='draw'){
     const a=g.ann;
     // drop trivial zero-size shapes
@@ -2130,6 +2138,12 @@ function bindSidebar(){
     else if(t.dataset && t.dataset.note!=null){ saveNotes(); }
   });
   els.sideScroll.addEventListener('input',e=>{ if(e.target.dataset && e.target.dataset.note!=null) saveNotesSoon(); });
+  // <details> `toggle` does not bubble — capture it so canvas readouts redraw at real size when a section opens
+  els.sideScroll.addEventListener('toggle',e=>{
+    if(e.target && e.target.tagName==='DETAILS' && e.target.open && state.cache.analysis && !state.cache.analysis.tainted){
+      updateHistogram();
+    }
+  },true);
 }
 
 function applyCustomAR(){
@@ -2426,7 +2440,7 @@ function bindToolbar(){
   on('btnCompare',toggleCompare); on('btnFocus',toggleFocus);
   on('btnFull',toggleFullscreen); on('btnReset',resetWorkspace);
   on('btnHelp',()=>openHelp('short')); on('btnExport',exportPNG);
-  on('btnSavePreset',saveCurrentPreset);
+  on('btnSavePreset',saveCurrentPreset); on('btnResetSheet',resetWorkspace);
   on('helpClose',()=>els.helpModal.classList.remove('open'));
   on('helpTabShort',()=>showHelpTab('short')); on('helpTabGuide',()=>showHelpTab('guide'));
   els.presetSelect.addEventListener('change',e=>{
